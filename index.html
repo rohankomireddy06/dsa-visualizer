@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav>
+    <div class="logo">dsa<span class="logo-dot">.</span>viz</div>
+    <div class="nav-tabs">
+      <button class="tab-btn active" data-section="sort">Sorting</button>
+      <button class="tab-btn" data-section="path">Pathfinding</button>
+      <button class="tab-btn" data-section="bst">BST</button>
+    </div>
+  </nav>
+
+  <!-- SORTING -->
+  <section id="sort" class="section active">
+    <div class="page-header">
+      <h2>Sorting Visualizer</h2>
+      <p>Watch algorithms sort in real time. Edit the code, then run it — highlighted lines follow execution.</p>
+    </div>
+    <div class="controls">
+      <div class="ctrl-group">
+        <label>Algorithm</label>
+        <select id="algo-select">
+          <option value="bubble">Bubble Sort</option>
+          <option value="selection">Selection Sort</option>
+          <option value="insertion">Insertion Sort</option>
+          <option value="merge">Merge Sort</option>
+          <option value="quick">Quick Sort</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Array Size <span id="size-val">40</span></label>
+        <input type="range" id="size-slider" min="10" max="80" value="40" />
+      </div>
+      <div class="ctrl-group">
+        <label>Speed <span id="speed-val">Medium</span></label>
+        <input type="range" id="speed-slider" min="1" max="5" value="3" />
+      </div>
+      <button class="btn btn-secondary" id="gen-btn">New Array</button>
+      <button class="btn btn-primary"   id="sort-btn">&#9654; Sort</button>
+      <button class="btn btn-secondary" id="stop-btn" disabled>&#9632; Stop</button>
+    </div>
+    <div id="complexity-display" class="complexity-row"></div>
+    <div class="sort-layout">
+      <div class="panel">
+        <div class="panel-label">Visualization</div>
+        <div id="sort-canvas"></div>
+        <div class="status-bar">
+          <div class="status-dot idle" id="sort-dot"></div>
+          <span id="sort-status">Ready</span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-label">Pseudocode</div>
+        <div class="pseudocode-panel" id="pseudo-code"></div>
+        <div class="step-info" id="step-info">Press Sort to begin.</div>
+      </div>
+      <div class="panel">
+        <div class="panel-label">Live Code Editor <span class="badge-tag">editable</span></div>
+        <textarea id="code-editor" spellcheck="false"></textarea>
+        <div class="editor-hint">Edit the code above, then press Sort. Lines highlight as they execute.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATHFINDING -->
+  <section id="path" class="section">
+    <div class="page-header">
+      <h2>Pathfinding Visualizer</h2>
+      <p>Draw walls, place start and end, watch algorithms find the shortest path.</p>
+    </div>
+    <div class="controls">
+      <div class="ctrl-group">
+        <label>Algorithm</label>
+        <select id="path-algo">
+          <option value="bfs">BFS - Breadth First Search</option>
+          <option value="dfs">DFS - Depth First Search</option>
+          <option value="dijkstra">Dijkstra's Algorithm</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Draw Mode</label>
+        <select id="draw-mode">
+          <option value="wall">Draw Walls</option>
+          <option value="start">Set Start</option>
+          <option value="end">Set End</option>
+        </select>
+      </div>
+      <button class="btn btn-primary"   id="path-btn">&#9654; Find Path</button>
+      <button class="btn btn-secondary" id="clear-path-btn">Clear Path</button>
+      <button class="btn btn-secondary" id="clear-grid-btn">Clear Grid</button>
+      <button class="btn btn-secondary" id="maze-btn">Generate Maze</button>
+    </div>
+    <div class="path-layout">
+      <div class="panel" style="flex:2">
+        <div class="grid-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Start</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>End</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2a2a35"></div>Wall</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(124,106,247,0.5)"></div>Visited</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>Path</div>
+        </div>
+        <div id="grid-container"><div id="grid"></div></div>
+        <div class="status-bar">
+          <div class="status-dot idle" id="path-dot"></div>
+          <span id="path-status">Draw walls and press Find Path.</span>
+        </div>
+      </div>
+      <div class="panel" style="flex:1">
+        <div class="panel-label">Live Code Editor <span class="badge-tag">editable</span></div>
+        <textarea id="path-code-editor" spellcheck="false"></textarea>
+        <div class="editor-hint">Lines highlight as the search runs.</div>
+        <div class="pseudocode-panel" id="path-pseudo" style="margin-top:12px;font-size:11px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BST -->
+  <section id="bst" class="section">
+    <div class="page-header">
+      <h2>Binary Search Tree</h2>
+      <p>Insert, delete, search, and traverse with live animation and highlighted code.</p>
+    </div>
+    <div class="controls">
+      <input type="number" id="bst-input" class="bst-input" placeholder="Value" min="1" max="999" />
+      <button class="btn btn-primary"   id="bst-insert-btn">Insert</button>
+      <button class="btn btn-secondary" id="bst-delete-btn">Delete</button>
+      <button class="btn btn-secondary" id="bst-search-btn">Search</button>
+      <button class="btn btn-secondary" id="bst-inorder-btn">Inorder</button>
+      <button class="btn btn-secondary" id="bst-preorder-btn">Preorder</button>
+      <button class="btn btn-secondary" id="bst-postorder-btn">Postorder</button>
+      <button class="btn btn-danger"    id="bst-clear-btn">Clear</button>
+    </div>
+    <div class="complexity-row">
+      <div class="badge badge-time">Search: O(log n) avg</div>
+      <div class="badge badge-time">Insert: O(log n) avg</div>
+      <div class="badge badge-space">Space: O(n)</div>
+    </div>
+    <div class="bst-layout">
+      <div class="panel" style="flex:2">
+        <div class="panel-label">Tree Visualization</div>
+        <div id="bst-svg-container"><svg id="bst-svg"></svg></div>
+        <div class="traversal-output" id="traversal-output">Traversal result will appear here.</div>
+        <div class="status-bar">
+          <div class="status-dot idle" id="bst-dot"></div>
+          <span id="bst-status">Insert values to build the tree.</span>
+        </div>
+      </div>
+      <div class="panel" style="flex:1">
+        <div class="panel-label">Live Code Editor <span class="badge-tag">editable</span></div>
+        <textarea id="bst-code-editor" spellcheck="false"></textarea>
+        <div class="editor-hint">Code highlights as the tree operation runs.</div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
